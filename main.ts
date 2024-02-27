@@ -12,18 +12,6 @@ input.onButtonPressed(Button.A, function () {
         serial.writeLine("")
     }
 })
-function Initialization () {
-    Training = 0
-    On = 0
-    dataSessions = []
-    Training_Name = 0
-    serial.writeString("Which Activity do you want to train?")
-    serial.writeLine("")
-    serial.writeString("Button A: Motor turn 90 degrees CW")
-    serial.writeLine("")
-    serial.writeString("Button B: Motor turn 90 degrees CC")
-    serial.writeLine("")
-}
 input.onButtonPressed(Button.B, function () {
     if (Training == 0) {
         serial.writeString("You picked 90 degrees CC. Press A to start training and B to stop")
@@ -33,6 +21,7 @@ input.onButtonPressed(Button.B, function () {
         currentSession = []
         currentSession.push(Training_Name)
     } else {
+        let dataSessions: number[][] = []
         On = 0
         Training = 0
         serial.writeString("End Data Collection")
@@ -46,12 +35,11 @@ input.onButtonPressed(Button.B, function () {
         serial.writeLine("")
     }
 })
-let dataSessions: number[][] = []
 let On = 0
 let currentSession: number[] = []
 let Training_Name = 0
 let Training = 0
-Initialization()
+custom.Initialization()
 basic.forever(function () {
     if (On == 1) {
         input.setAccelerometerRange(AcceleratorRange.OneG)

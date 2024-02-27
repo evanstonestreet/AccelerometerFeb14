@@ -23,7 +23,7 @@ namespace custom {
      * @param e describe parameter here
      */
     //% block="Initialization"
-    export function Initialization(n: number, s: string, e: MyEnum): void {
+    export function Initialization(): void {
         let Training = 0
         let On = 0
         let dataSessions = []
