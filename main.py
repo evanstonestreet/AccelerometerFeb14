@@ -13,6 +13,19 @@ def on_button_pressed_a():
         serial.write_line("")
 input.on_button_pressed(Button.A, on_button_pressed_a)
 
+def Initialization():
+    global Training, On, dataSessions, Training_Name
+    Training = 0
+    On = 0
+    dataSessions = []
+    Training_Name = 0
+    serial.write_string("Which Activity do you want to train?")
+    serial.write_line("")
+    serial.write_string("Button A: Motor turn 90 degrees CW")
+    serial.write_line("")
+    serial.write_string("Button B: Motor turn 90 degrees CC")
+    serial.write_line("")
+
 def on_button_pressed_b():
     global Training, Training_Name, currentSession, On
     if Training == 0:
@@ -36,25 +49,12 @@ def on_button_pressed_b():
         serial.write_line("")
 input.on_button_pressed(Button.B, on_button_pressed_b)
 
-def TrainData(list2: List[any]):
-    global Classification
-    Classification = 0
-Classification = 0
-currentSession: List[number] = []
-Training_Name = 0
 dataSessions: List[List[number]] = []
 On = 0
-Training = 0
-Training = 0
-On = 0
-dataSessions = []
+currentSession: List[number] = []
 Training_Name = 0
-serial.write_string("Which Activity do you want to train?")
-serial.write_line("")
-serial.write_string("Button A: Motor turn 90 degrees CW")
-serial.write_line("")
-serial.write_string("Button B: Motor turn 90 degrees CC")
-serial.write_line("")
+Training = 0
+Initialization()
 
 def on_forever():
     if On == 1:
