@@ -14,6 +14,7 @@ let Testing = 0
 let dataSessionsNew: number[][] = []
 let currentSessionNew: number[] = []
 let TrainingOn = 0
+let finished = 0
 custom.Initialization()
 custom.activity(50)
 custom.activity(10)

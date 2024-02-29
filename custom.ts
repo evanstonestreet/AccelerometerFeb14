@@ -39,8 +39,6 @@ namespace custom {
         }
         
         if (TrainingOn == 1) {
-            serial.writeString("We are training now")
-            serial.writeLine("")
             input.setAccelerometerRange(AcceleratorRange.OneG)
             serial.writeNumber(input.acceleration(Dimension.X))
             currentSessionNew.push(input.acceleration(Dimension.X))
@@ -80,7 +78,6 @@ namespace custom {
                 TrainingOn = 1
                 serial.writeString("Start Data Collection")
                 serial.writeLine("")
-                activityNum = activityNum + 1
 
             }
         }
@@ -100,6 +97,7 @@ namespace custom {
                 serial.writeLine("")
                 dataSessionsNew.push(currentSessionNew)
                 currentSessionNew = []
+                activityNum = activityNum + 1
 
             }
         }
@@ -112,10 +110,12 @@ namespace custom {
      */
     //% block="finish"
     export function finish(): void {
-        if (activityNum > numOfActivities){
+        if (activityNum > numOfActivities && finished == 0){
+            finished = 1
             serial.writeString("Number of activities: ")
             serial.writeNumber(numOfActivities)
             serial.writeLine("")
+            console.log(dataSessionsNew)
         }
     }
 }
