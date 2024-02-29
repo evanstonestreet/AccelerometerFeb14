@@ -34,18 +34,22 @@ namespace custom {
      */
     //% block="Train"
     export function train(): void {
-        if (On == 1) {
+        if (Training == 0 && Testing == 0){
+            Training = 1
+        }
+        
+        if (TrainingOn == 1) {
             serial.writeString("We are training now")
             serial.writeLine("")
             input.setAccelerometerRange(AcceleratorRange.OneG)
             serial.writeNumber(input.acceleration(Dimension.X))
-            currentSession.push(input.acceleration(Dimension.X))
+            currentSessionNew.push(input.acceleration(Dimension.X))
             serial.writeString(",")
             serial.writeNumber(input.acceleration(Dimension.Y))
-            currentSession.push(input.acceleration(Dimension.Y))
+            currentSessionNew.push(input.acceleration(Dimension.Y))
             serial.writeString(",")
             serial.writeNumber(input.acceleration(Dimension.Z))
-            currentSession.push(input.acceleration(Dimension.Z))
+            currentSessionNew.push(input.acceleration(Dimension.Z))
             serial.writeLine("")
         }
     }
@@ -67,16 +71,18 @@ namespace custom {
      */
     //% block="trainButtonA"
     export function trainButtonA(): void {
-        if (activityNum <= numOfActivities && On == 0) {
-            serial.writeString("You are training activity ")
-            serial.writeNumber(activityNum)
-            serial.writeLine("")
-            currentSession.push(activityNum)
-            On = 1
-            serial.writeString("Start Data Collection")
-            serial.writeLine("")
-            activityNum = activityNum + 1
-            
+        if (Training == 1){
+            if (activityNum <= numOfActivities && TrainingOn == 0) {
+                serial.writeString("You are training activity ")
+                serial.writeNumber(activityNum)
+                serial.writeLine("")
+                currentSessionNew.push(activityNum)
+                TrainingOn = 1
+                serial.writeString("Start Data Collection")
+                serial.writeLine("")
+                activityNum = activityNum + 1
+
+            }
         }
     }
 
@@ -87,15 +93,16 @@ namespace custom {
      */
     //% block="trainButtonB"
     export function trainButtonB(): void {
-        if (On == 1){
-            On = 0
-            serial.writeString("End Data Collection")
-            serial.writeLine("")
-            dataSessions.push(currentSession)
-            currentSession = []
-            
-        }
+        if (Training == 1){
+            if (TrainingOn == 1) {
+                TrainingOn = 0
+                serial.writeString("End Data Collection")
+                serial.writeLine("")
+                dataSessionsNew.push(currentSessionNew)
+                currentSessionNew = []
 
+            }
+        }
     }
 
 
@@ -105,8 +112,10 @@ namespace custom {
      */
     //% block="finish"
     export function finish(): void {
-        serial.writeString("Number of activities: ")
-        serial.writeNumber(numOfActivities)
-        serial.writeLine("")
+        if (activityNum > numOfActivities){
+            serial.writeString("Number of activities: ")
+            serial.writeNumber(numOfActivities)
+            serial.writeLine("")
+        }
     }
 }
